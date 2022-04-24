@@ -6,8 +6,8 @@ const  authorize = require("../middlewares/authorize")
 router.route('/add')
     .post(authorize, addPeople);
 
-    router.route('/')
-    .get( getPeople);
+    router.route('/:userId')
+    .get(authorize, getPeople);
 
     router.route('/:_id')
     .delete(authorize, deletePeople);

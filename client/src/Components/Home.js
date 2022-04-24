@@ -6,25 +6,35 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => {
 	return {
 	  token: state.token,
+	  userId: state.userId
+
 	}
   }
 
 const Home = (props) => {
 	const [values, setValues] = useState({
-		people: ''
+		people: '',
+		relation:'',
+		relationshipPerson:''
 	});
 
 	const [list, setList] = useState([])
 
+	const [start, setStart] = useState("")
+	const [end, setEnd] = useState("")
+
 	const token = props.token;
+
+	const userId= props.userId;
+
 
 	useEffect(()=>{
 
 
-		getPeople()
+		getPeople(token, userId)
 		.then(res => setList(res.data));
 
-	}, [values])
+	}, [values, token, userId])
 
 	const deletePeople = async (_id)=>{
 
@@ -34,41 +44,81 @@ const Home = (props) => {
 	
 	}
 
-	const editPeople = (_id) =>{
 
-		console.log(_id);
-	
-	}
 
 
 	const getList = list.map((l)=>{
+
+	
+
 		return (
 
-			<div className='col-6 m-3' key={l._id} >
-				<button className='btn btn-outline-primary m-3'>{l.people}</button>
-				<button className='btn btn-outline-primary m-3' onClick={(e)=>editPeople(l._id)}>edit</button>
-				<button className='btn btn-outline-primary m-3' onClick={(e)=>deletePeople(l._id)}>delete</button>
+			
+
+<div key={l._id}>
+			<button className='btn btn-outline-primary m-3' 
+			onClick={()=>handlestartClick(l.people)}
+			>{l.people}</button>
+
+				<button className='btn btn-outline-primary m-3'>{l.people} is a {l.relation} of {l.relationshipPerson}</button>
+			
+				<button className='btn btn-outline-primary m-3' onClick={()=>handleendClick(l.relationshipPerson)}>{l.relationshipPerson}</button>
+				{/* <button className='btn btn-outline-primary m-3' onClick={(e)=>deletePeople(l._id)}>delete</button> */}
+				</div>
+		
 	
-			</div>
+	
 		)
 	}
 	)
 
-	const { people } = values;
+	const { people, relation, relationshipPerson } = values;
+
+
+	const handlestartClick = (name)=>{
+		setStart(name)
+		handleRelation(name)
+	}
+
+	const handleendClick = (name2)=>{
+		setEnd(name2)
+		handleRelation(name2)
+
+	}
+
+	const handleRelation = (startName, endName)=>{
+		
+
+		
+
+
+	}
+
+
 
 	
 	const handleChange = (e) => {
 		setValues({
+			...values,
 
 			[e.target.name]: e.target.value,
+			
 		});
+
+		
+
+		
 	};
+
 
 	const handleSubmit = (e) => {
 			e.preventDefault();
 			setValues(values);
-			addPeople(token, values);
-			setValues({ people: ""});
+			addPeople(token, values, userId);
+			setValues({ people: '',
+				relation:'', 
+				relationshipPerson:''
+		});
 	};
 
 
@@ -86,33 +136,66 @@ const Home = (props) => {
 						<h4>Welcome to home</h4>
 					</div>
 
-					<div className='col-4'>
+					<div className='col-6'>
 						<br />
 						<form onSubmit={handleSubmit}>
-							<div className="form-group">
-								<label className="text-muted">Add People</label>
-								<input
-									name="people"
-									type="text"
-									onChange={handleChange}
-									value={people}
-									autoFocus
-									required
-									className="form-control"
-								/>
+                <div className="form-group">
+                    <label className="text-muted">Name</label>
+                    <input
+                        name="people"
+                        type="text"
+                        onChange={handleChange}
+                        value={people}
+                        autoFocus
+                        required
+                        className="form-control"
+                    />
+                </div>
+				<div className="form-group">
+                    <label className="text-muted">relation</label>
+                    <input
+                        name="relation"
+               
+                        onChange={handleChange}
+                        value={relation}
+                     
+                        className="form-control"
+                    />
+                </div>
+				<div className="form-group">
+                    <label className="text-muted">Relationship Person</label>
+                    <input
+                        name="relationshipPerson"
+               
+                        onChange={handleChange}
+                        value={relationshipPerson}
+                     
+                        className="form-control"
+                    />
+                </div>
+				
+                <button type="submit" className="btn btn-outline-primary">add people</button>
+            </form>
+					</div>
+					<div className='col-4 text-center'>
+						<br/>
+						<br/>
+						{start}
 
-							</div>
+						<br/>
+						<br/>
 
-							<div className="col-4">
-						<br />
-						<br />
-						<button type="submit" className="btn btn-outline-primary">
-							add people
-						</button>
+						{end}
+
+
+						<br/>
+						<br/>
+
+						
+
 					</div>
 
-						</form>
-					</div>
+
 
 					
 				</div>
@@ -121,7 +204,9 @@ const Home = (props) => {
 				<br />
 
 				<div className='row'>
-					{getList}
+					<div className='col-8'>{getList}</div>
+					
+					
 				</div>
 			</div>
 		</div>

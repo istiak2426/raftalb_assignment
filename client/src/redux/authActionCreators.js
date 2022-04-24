@@ -40,7 +40,7 @@ export const auth = ( email, password, mode) => dispatch => {
     }
 
 
-    console.log(process.env.REACT_APP_BACKEND_URL)
+
 
     let url= "http://localhost:3001";
     let authUrl = null;

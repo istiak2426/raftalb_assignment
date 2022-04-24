@@ -1,11 +1,8 @@
 
 const { People } = require('../models/people');
+const {User} = require("../models/user");
 
 module.exports.addPeople = async (req, res) => {
-
-
-
-  
 
         const newPeople = new People(req.body);
         const result = await newPeople.save();
@@ -34,7 +31,13 @@ module.exports.editPeople = async (req, res) => {
 
 
 module.exports.getPeople = async (req, res) => {
-    const getNewPeople = await People.find();
+
+
+    const currentUser = await User.findById(req.params.userId)
+
+
+    const getNewPeople = await People.find({userId:currentUser._id});
+
     return res.status(200).send(getNewPeople);
 }
 
