@@ -5,6 +5,8 @@ const API = "http://localhost:3001"
 
 export const addPeople = async (token, values, userId) => {
 
+    console.log(values);
+
     const res = await axios.post(`${API}/api/people/add`,
         {
 
