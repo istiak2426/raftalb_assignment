@@ -12,28 +12,28 @@ export const authSuccess = (token, userId) => {
     }
 }
 
-export const authLoading  = (isLoading) =>{
+export const authLoading = (isLoading) => {
 
-    
 
-    return{
+
+    return {
         type: actionTypes.AUTH_LOADING,
         payload: isLoading,
     }
 }
 
-export const authFailed  = errMsg =>{
+export const authFailed = errMsg => {
     return {
         type: actionTypes.AUTH_FAILED,
         payload: errMsg,
     }
 }
 
-export const auth = ( email, password, mode) => dispatch => {
+export const auth = (email, password, mode) => dispatch => {
 
     dispatch(authLoading(true));
     const authData = {
-     
+
         email: email,
         password: password,
 
@@ -42,14 +42,14 @@ export const auth = ( email, password, mode) => dispatch => {
 
 
 
-    let url= "http://localhost:3001";
+    let url = "http://localhost:3001";
     let authUrl = null;
     if (mode === "Sign Up") {
         authUrl = `${url}/api/auth/signup`
     } else {
         authUrl = `${url}/api/auth/login`;
     }
-  
+
     axios.post(authUrl, authData)
         .then(response => {
             dispatch(authLoading(false));
@@ -60,7 +60,7 @@ export const auth = ( email, password, mode) => dispatch => {
             localStorage.setItem('expirationTime', expirationTime);
             dispatch(authSuccess(response.data.token, response.data.user._id));
         })
-        .catch(err=>{
+        .catch(err => {
             dispatch(authLoading(false));
             dispatch(authFailed())
             dispatch(authFailed(err.response.data));

@@ -29,29 +29,15 @@ const Menu = (props) => {
   let links = null;
   if (props.token === null) {
     links = (
-
       <>
-        
         <li className="nav-item"><Link className="nav-link" to="/login">Log in</Link></li>
-
-
-      </>
-
-    )
+      </>)
   } else {
     links = (
       <>
-
-        <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/logout">Log out</Link></li>
-
-
-      </>
-    )
+      </>)
   }
-
-
-
   const handleNav = () => {
     console.log("clicked");
     setIsNavOpen(!isNavOpen);
@@ -60,21 +46,18 @@ const Menu = (props) => {
     <Navbar
       color="dark"
       dark expand="sm">
-     
-        <NavbarBrand href="/">
-          StyleSense
-        </NavbarBrand>
-  
+
+      <NavbarBrand href="/">
+        Raftlab
+      </NavbarBrand>
+
       <NavbarToggler
-      onClick={handleNav} 
+        onClick={handleNav}
       />
 
-
-        
       <Collapse navbar isOpen={isNavOpen}  >
         <Nav navbar className="ml-3">
-        {links}
-        
+          {links}
         </Nav>
       </Collapse>
     </Navbar>
