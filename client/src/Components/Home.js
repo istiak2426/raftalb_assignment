@@ -47,7 +47,7 @@ const Home = (props) => {
 			<button className='btn btn-outline-primary m-3' onClick={() => handlestartClick(l.people)}>{l.people}</button>
 			<button className='btn btn-outline-primary m-3'>{l.people} is a {l.relation} of {l.relationshipPerson}</button>
 			<button className='btn btn-outline-primary m-3' onClick={() => handleendClick(l.relationshipPerson)}>{l.relationshipPerson}</button>
-			<button className='btn btn-outline-primary m-3' onClick={(e) => deletePeople(l._id)}>delete</button>
+			<button className='btn btn-outline-primary m-3' onClick={(e) => deletePeople(l._id)}>Delete</button>
 		</div>
 		)
 	}
@@ -177,7 +177,7 @@ const Home = (props) => {
 								/>
 							</div>
 							<br />
-							<button type="submit" className="btn btn-outline-primary">add people</button>
+							<button type="submit" className="btn btn-outline-primary">Add People</button>
 						</form>
 					</div>
 
